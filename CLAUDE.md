@@ -10,15 +10,19 @@ one minute after a change reaches the `main` branch.
    commit messages, can be read by anyone. Never add private company documents, client names,
    tax numbers, passwords or personal data that is not already meant to be on the website.
    PDF, Word and Excel files are blocked by `.gitignore`; do not work around that.
-2. **Never push to `main`.** Work on a new branch and open a pull request. The site owner
-   reviews and merges it. `main` is protected, so a direct push will be refused.
-3. **Run `npm run build` before opening the pull request** and make sure it finishes without
-   errors. A broken build means the site does not update.
+2. **Changes go live without review.** The site owner has chosen not to approve each change.
+   When the edit is done and the build passes, put it on `main`: push to `main` directly, or,
+   if your tool can only push to its own branch, open a pull request and merge it straight away
+   (no approval is needed). Never force-push, rewrite history or delete branches; the owner
+   relies on the history to undo changes later.
+3. **Run `npm run build` before the change reaches `main`** and make sure it finishes without
+   errors. Because nobody reviews the change first, this check is the only safety net.
 4. **Keep the three languages in step.** A change to prices or facts in `content/en.yml`
    normally needs the same change in `content/lo.yml` and `content/zh.yml`. If you cannot
    translate something reliably, say so in the pull request instead of guessing.
-5. **Keep the change small** and do only what was asked. Describe in the pull request, in plain
-   words, what changed and on which pages.
+5. **Keep the change small** and do only what was asked, one topic per commit. Write the commit
+   message in plain words saying what changed and on which pages (e.g. "Update Starter price
+   on Services page, all languages"), so the owner can find and undo it later.
 
 ## Where things are
 
