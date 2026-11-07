@@ -1,0 +1,28 @@
+# ============================================================
+#  INSIGHTS VIDEOS — "CFO Board Briefing"
+#
+#  To add a video, copy the example block below and paste it UNDER the
+#  line "videos:" at the bottom of this file. Remove the # at the start
+#  of each line and fill it in. Newest video goes at the TOP.
+#  Keep the two spaces at the start of each line exactly as shown.
+#
+#    url:   the link to the video (Facebook or YouTube) — just paste it
+#    date:  when it was published, as YYYY-MM-DD
+#    title: the video's title in each language
+#    company: (optional) the company being discussed
+#
+#  Example:
+#
+#  - url: "https://www.youtube.com/watch?v=XXXXXXXXXXX"
+#    date: "2026-11-01"
+#    company: "EDL-Gen"
+#    title:
+#      lo: "ສະຫຼຸບບົດລາຍງານການເງິນ ປີ 2025"
+#      en: "2025 financial statements explained"
+#      zh: "2025年财务报表解读"   # TODO: check by a fluent speaker
+#
+#  Facebook links work too, e.g. https://www.facebook.com/yourpage/videos/1234567890
+# ============================================================
+
+videos:
+

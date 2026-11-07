@@ -1,0 +1,51 @@
+# ============================================================
+#  BUSINESS DETAILS — shared by all three languages
+#  Change a value here and it updates everywhere on the site.
+#  Anything in [SQUARE BRACKETS] is a placeholder still to fill in.
+# ============================================================
+
+# Website address. Change this when you connect your own domain,
+# e.g. https://www.asbc.la  (no slash at the end)
+siteUrl: "https://asbc-website.pages.dev"
+
+# Company name — shown in the footer, header (on wide screens) and Google data.
+# PENDING CHANGE: when the change from "Sole Co., Ltd" to "Co., Ltd" is approved, edit these two lines:
+#   nameEn: "Accounting Service and Business Consultancy Co., Ltd"
+#   nameLo: "ບໍລິສັດ ບໍລິການບັນຊີ ແລະ ທີ່ປຶກສາກ່ຽວກັບທຸລະກິດ ຈຳກັດ"
+nameEn: "Accounting Service and Business Consultancy Sole Co., Ltd"
+nameShort: "ASBC"
+nameLo: "ບໍລິສັດ ບໍລິການບັນຊີ ແລະ ທີ່ປຶກສາກ່ຽວກັບທຸລະກິດ ຈຳກັດຜູ້ດຽວ"
+founded: "2009"
+
+# Phone / WhatsApp — taken from the 2026 company profile. Please confirm.
+phoneDisplay: "+856 20 5922 6399"
+# WhatsApp number: digits only, with country code, no + or spaces
+whatsapp: "8562059226399"
+# Email — taken from the 2026 company profile. Please confirm.
+email: "asbcthanh7@gmail.com"
+
+facebook: "[FACEBOOK PAGE URL]"
+mapsLink: "[MAPS LINK]"
+
+# Opening hours, shown on the Contact page (one line per language is in lo.yml / en.yml / zh.yml)
+# These are for Google (structured data). Format: Mo-Fr 08:00-17:00
+# Leave as [HOURS] until you know them — Google data is skipped while it is a placeholder.
+hoursMachine: "[HOURS]"
+
+address:
+  streetEn: "Ban Phonpapao, Sisattanak District"
+  cityEn: "Vientiane Capital"
+  countryCode: "LA"
+
+# Ministry of Finance approval — the main selling point.
+# Notice 2906/2026 is the MOF letter listing approved firms (ASBC is No. 89 on the list).
+# It is NOT the licence itself. Fill in licenceNo when ready; while it is [LICENCE NO.]
+# the licence row is hidden from the website.
+licence:
+  firmNo: "89"
+  notice: "2906/2026"
+  noticeDate: "2026-07-29"
+  licenceNo: "[LICENCE NO.]"
+  # Put the scanned notice in public/images/ and write its file name here,
+  # e.g. "licence-notice.jpg". Leave empty to show a placeholder box.
+  scanImage: ""

@@ -1,0 +1,178 @@
+---
+// The frame around every page: <head> tags for Google and Facebook,
+// header with menu and language switcher, footer, floating WhatsApp button.
+// Fonts are served from this website (no Google Fonts request), Lao and Latin letters only.
+// Chinese uses the phone's own Noto/PingFang/YaHei font, which avoids a very large download.
+import '@fontsource/noto-sans-lao/lao-400.css';
+import '@fontsource/noto-sans-lao/lao-600.css';
+import '@fontsource/noto-sans-lao/lao-700.css';
+import '@fontsource/noto-sans/latin-400.css';
+import '@fontsource/noto-sans/latin-600.css';
+import '@fontsource/noto-sans/latin-700.css';
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import ZhCheck from '../components/ZhCheck.astro';
+import Flag from '../components/Flag.astro';
+import {
+  business, t, LANGS, LOCALE, PAGES, pageUrl, isPlaceholder, whatsappLink, telLink,
+} from '../lib/content.js';
+
+const { lang, page = '', title, description } = Astro.props;
+const tx = t(lang);
+const site = business.siteUrl.replace(/\/$/, '');
+const canonical = site + pageUrl(lang, page);
+const ogImage = site + '/images/og-image.png';
+const navKeys = { '': 'home', services: 'services', about: 'about', insights: 'insights', contact: 'contact' };
+const wa = whatsappLink(tx.common.whatsappMessage);
+
+// Structured data for Google (LocalBusiness / AccountingService)
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AccountingService',
+  '@id': site + '/#business',
+  name: business.nameEn,
+  alternateName: [business.nameShort, business.nameLo],
+  url: site + pageUrl(lang),
+  logo: site + '/images/logo.png',
+  image: ogImage,
+  telephone: business.phoneDisplay,
+  email: business.email,
+  foundingDate: business.founded,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.address.streetEn,
+    addressLocality: business.address.cityEn,
+    addressCountry: business.address.countryCode,
+  },
+  areaServed: { '@type': 'Country', name: 'Lao PDR' },
+  availableLanguage: ['lo', 'en', 'zh'],
+};
+if (!isPlaceholder(business.hoursMachine)) jsonLd.openingHours = business.hoursMachine;
+if (!isPlaceholder(business.mapsLink)) jsonLd.hasMap = business.mapsLink;
+if (!isPlaceholder(business.facebook)) jsonLd.sameAs = [business.facebook];
+---
+<!doctype html>
+<html lang={LOCALE[lang].html}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {LANGS.map((l) => <link rel="alternate" hreflang={LOCALE[l].hreflang} href={site + pageUrl(l, page)} />)}
+    <link rel="alternate" hreflang="x-default" href={site + pageUrl('lo', page)} />
+    <meta name="theme-color" content="#0e5132" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ASBC" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={LOCALE[lang].og} />
+    {LANGS.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={LOCALE[l].og} />)}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <ZhCheck lang={lang} />
+    <a class="skip-link" href="#main">{tx.common.skipToContent}</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href={pageUrl(lang)} aria-label={`ASBC – ${tx.nav.home}`}>
+          <img src="/images/logo.png" width="74" height="37" alt="ASBC" />
+          <span class="brand-name">{lang === 'lo' ? business.nameLo : business.nameEn}</span>
+        </a>
+
+        <div class="header-right">
+          <nav class="nav-desktop" aria-label="Main">
+            {PAGES.map((p) => (
+              <a href={pageUrl(lang, p)} aria-current={p === page ? 'page' : undefined}>{tx.nav[navKeys[p]]}</a>
+            ))}
+          </nav>
+
+          <details class="lang-menu dropdown">
+            <summary aria-label={`${tx.common.language}: ${tx.langName}`}>
+              <Flag lang={lang} /><span class="lang-current">{tx.langName}</span><span class="caret" aria-hidden="true"></span>
+            </summary>
+            <nav class="lang-panel" aria-label={tx.common.language}>
+              {LANGS.map((l) => (
+                <a href={pageUrl(l, page)} lang={LOCALE[l].html} hreflang={LOCALE[l].hreflang}
+                   aria-current={l === lang ? 'true' : undefined}><Flag lang={l} />{t(l).langName}</a>
+              ))}
+            </nav>
+          </details>
+
+          <details class="menu dropdown">
+            <summary>{tx.nav.menu}</summary>
+            <nav class="menu-panel" aria-label="Main">
+              {PAGES.map((p) => (
+                <a href={pageUrl(lang, p)} aria-current={p === page ? 'page' : undefined}>{tx.nav[navKeys[p]]}</a>
+              ))}
+            </nav>
+          </details>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <ZhCheck lang={lang} />
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h2>{business.nameEn}</h2>
+            <p lang="lo" style="margin-bottom:6px">{business.nameLo}</p>
+            <p style="margin-bottom:0">{tx.footer.tagline}</p>
+            <p class="footer-licence">{tx.common.licenceLine}</p>
+          </div>
+          <div>
+            <h2>{tx.nav.menu}</h2>
+            <ul>
+              {PAGES.map((p) => <li><a href={pageUrl(lang, p)}>{tx.nav[navKeys[p]]}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <h2>{tx.nav.contact}</h2>
+            <ul>
+              <li><a href={wa}>WhatsApp</a></li>
+              <li><a href={telLink()}>{business.phoneDisplay}</a></li>
+              <li><a href={`mailto:${business.email}`}>{business.email}</a></li>
+              {!isPlaceholder(business.facebook) && <li><a href={business.facebook} rel="noopener">Facebook</a></li>}
+              <li>{tx.contact.address}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">© {new Date().getFullYear()} ASBC. {tx.footer.rights}</div>
+      </div>
+    </footer>
+
+    <a class="wa-float" href={wa} aria-label={tx.common.whatsappCta}>
+      <Icon name="whatsapp" /><span>{tx.common.whatsappFloat}</span>
+    </a>
+
+    <script is:inline>
+      // Dropdowns (language, menu): close when tapping elsewhere, pressing Esc, or opening the other one.
+      // Without JavaScript they still open and close by tapping the button.
+      const dds = document.querySelectorAll('details.dropdown');
+      dds.forEach((d) => d.addEventListener('toggle', () => {
+        if (d.open) dds.forEach((o) => { if (o !== d) o.open = false; });
+      }));
+      document.addEventListener('click', (e) => {
+        dds.forEach((d) => { if (d.open && !d.contains(e.target)) d.open = false; });
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') dds.forEach((d) => { if (d.open) { d.open = false; d.querySelector('summary').focus(); } });
+      });
+    </script>
+  </body>
+</html>

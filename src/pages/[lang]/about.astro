@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ZhCheck from '../../components/ZhCheck.astro';
+import { t, langPaths, business, formatDate, isPlaceholder } from '../../lib/content.js';
+
+export const getStaticPaths = langPaths;
+const { lang } = Astro.params;
+const tx = t(lang);
+const a = tx.about;
+const lic = business.licence;
+---
+<Base lang={lang} page="about" title={a.title} description={a.description}>
+  <section class="hero">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <span class="badge"><Icon name="shield" />{tx.common.licenceBadge}</span>
+      <h1>{a.heading}</h1>
+      <p class="licence-line">{tx.common.licenceLine}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <h2>{a.storyTitle}</h2>
+      <div style="max-width:46em">
+        {a.story.map((para) => <p>{para}</p>)}
+      </div>
+      <div class="stats">
+        {a.stats.map((s) => <div class="stat"><strong>{s.value}</strong><span>{s.label}</span></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream" id="licence">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <h2>{a.licenceTitle}</h2>
+      <div class="licence-box">
+        <div class="licence-facts">
+          <span class="badge"><Icon name="shield" />{tx.common.licenceBadge}</span>
+          <p style="margin-top:14px">{a.licenceText}</p>
+          <dl>
+            <dt>{a.licenceLabels.no}</dt><dd>{lic.firmNo}</dd>
+            <dt>{a.licenceLabels.notice}</dt><dd>{lic.notice}</dd>
+            <dt>{a.licenceLabels.date}</dt><dd>{formatDate(lic.noticeDate, lang)}</dd>
+            {!isPlaceholder(lic.licenceNo) && <><dt>{a.licenceLabels.licence}</dt><dd>{lic.licenceNo}</dd></>}
+            <dt>{a.licenceLabels.issuer}</dt><dd>{a.licenceLabels.issuerName}</dd>
+          </dl>
+        </div>
+        {lic.scanImage
+          ? <a href={`/images/${lic.scanImage}`}><img src={`/images/${lic.scanImage}`} alt={a.licenceScanAlt} loading="lazy" style="border:1px solid var(--line);border-radius:8px" /></a>
+          : <div class="scan-placeholder">{a.licenceScanPlaceholder}</div>}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <h2>{a.sectorsTitle}</h2>
+      <ul class="chips" style="margin-top:16px">{a.sectors.map((s) => <li>{s}</li>)}</ul>
+    </div>
+  </section>
+</Base>

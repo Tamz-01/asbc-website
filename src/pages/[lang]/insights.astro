@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ZhCheck from '../../components/ZhCheck.astro';
+import { t, langPaths, business, videos, videoEmbed, formatDate, isPlaceholder } from '../../lib/content.js';
+
+export const getStaticPaths = langPaths;
+const { lang } = Astro.params;
+const tx = t(lang);
+const ins = tx.insights;
+const items = videos.map((v) => ({
+  ...v,
+  embed: videoEmbed(v.url),
+  label: (v.title && (v.title[lang] || v.title.en || v.title.lo)) || v.company || '',
+}));
+---
+<Base lang={lang} page="insights" title={ins.title} description={ins.description}>
+  <section class="hero">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <h1>{ins.heading}</h1>
+      <p class="hero-text">{ins.intro}</p>
+      <p class="disclaimer" role="note">{ins.disclaimer}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      {items.length === 0 ? (
+        <div class="empty">
+          <p>{ins.empty}</p>
+          {!isPlaceholder(business.facebook) && (
+            <a class="btn btn-outline" href={business.facebook} rel="noopener"><Icon name="facebook" />{ins.followFacebook}</a>
+          )}
+        </div>
+      ) : (
+        <div class="grid grid-2">
+          {items.map((v) => (
+            <article class="video-card">
+              {v.embed.src && (
+                <iframe class="video-frame" src={v.embed.src} title={v.label} loading="lazy"
+                  style={`aspect-ratio:${v.embed.ratio}`}
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen></iframe>
+              )}
+              <p class="meta">{[v.company, formatDate(v.date, lang)].filter(Boolean).join(' · ')}</p>
+              <h2 style="font-size:1.15rem">{v.label}</h2>
+              <a href={v.url} rel="noopener">{ins.watchOn} {v.embed.platform === 'link' ? '' : v.embed.platform} →</a>
+            </article>
+          ))}
+        </div>
+      )}
+      <p class="disclaimer" role="note" style="margin-top:28px">{ins.disclaimer}</p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ZhCheck from '../../components/ZhCheck.astro';
+import { t, langPaths, whatsappLink } from '../../lib/content.js';
+
+export const getStaticPaths = langPaths;
+const { lang } = Astro.params;
+const tx = t(lang);
+const s = tx.services;
+---
+<Base lang={lang} page="services" title={s.title} description={s.description}>
+  <section class="hero">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <span class="badge"><Icon name="shield" />{tx.common.licenceBadge}</span>
+      <h1>{s.heading}</h1>
+      <p class="hero-text">{s.intro}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <div class="grid grid-2">
+        {s.packages.map((p) => (
+          <article class={`card package${p.featured ? ' package--featured' : ''}`}>
+            <h2 style="font-size:1.35rem">{p.name}</h2>
+            <p class="for"><span class="label">{s.forLabel}:</span> {p.for}</p>
+            <p>{p.text}</p>
+            <span class="label">{s.includesLabel}</span>
+            <ul>{p.includes.map((item) => <li>{item}</li>)}</ul>
+            {p.note && <p class="note">{p.note}</p>}
+            <div class="price"><span>{s.priceLabel}</span><strong>{p.price}</strong></div>
+            <a class="btn btn-primary" href={whatsappLink(`${tx.common.whatsappMessage} (${p.name})`)}>
+              <Icon name="whatsapp" />{s.askCta}
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <h2>{s.oneOffTitle}</h2>
+      <p class="section-intro">{s.oneOffIntro}</p>
+      <ul class="oneoff">
+        {s.oneOff.map((o) => <li><span>{o.name}</span><strong>{o.price}</strong></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <h2>{s.howTitle}</h2>
+      <div class="grid grid-4 steps" style="margin-top:20px">
+        {s.how.map((step) => (
+          <article class="card"><h3>{step.title}</h3><p>{step.text}</p></article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,5 @@
+---
+// Adds the reminder comment to every section of the Chinese pages.
+const { lang } = Astro.props;
+---
+{lang === 'zh' && <Fragment set:html="<!-- TODO: check by a fluent speaker -->" />}

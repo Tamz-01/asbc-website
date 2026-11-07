@@ -1,0 +1,41 @@
+---
+// Small country flags drawn in code (emoji flags don't show on Windows).
+// lo = Laos, en = United Kingdom, zh = China
+const { lang } = Astro.props;
+
+// Points of a five-pointed star centred at (cx, cy)
+const star = (cx, cy, r, rot = 0) =>
+  Array.from({ length: 10 }, (_, i) => {
+    const rad = i % 2 ? r * 0.382 : r;
+    const a = (Math.PI / 5) * i - Math.PI / 2 + rot;
+    return `${(cx + rad * Math.cos(a)).toFixed(2)},${(cy + rad * Math.sin(a)).toFixed(2)}`;
+  }).join(' ');
+// Small Chinese stars point towards the big star
+const small = [[10, 2], [12, 4], [12, 7], [10, 9]].map(([x, y]) => ({
+  pts: star(x, y, 1, Math.atan2(5 - y, 5 - x) + Math.PI / 2),
+}));
+---
+{lang === 'lo' && (
+  <svg class="flag" viewBox="0 0 30 20" aria-hidden="true" focusable="false">
+    <rect width="30" height="20" fill="#ce1126" />
+    <rect y="5" width="30" height="10" fill="#002868" />
+    <circle cx="15" cy="10" r="4" fill="#fff" />
+  </svg>
+)}
+{lang === 'en' && (
+  <svg class="flag" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+    <clipPath id="flag-uk-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z" /></clipPath>
+    <rect width="60" height="30" fill="#012169" />
+    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6" />
+    <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#flag-uk-t)" stroke="#c8102e" stroke-width="4" />
+    <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10" />
+    <path d="M30,0 v30 M0,15 h60" stroke="#c8102e" stroke-width="6" />
+  </svg>
+)}
+{lang === 'zh' && (
+  <svg class="flag" viewBox="0 0 30 20" aria-hidden="true" focusable="false">
+    <rect width="30" height="20" fill="#ee1c25" />
+    <polygon points={star(5, 5, 3)} fill="#ffde00" />
+    {small.map((s) => <polygon points={s.pts} fill="#ffde00" />)}
+  </svg>
+)}

@@ -1,0 +1,73 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ZhCheck from '../../components/ZhCheck.astro';
+import { t, langPaths, pageUrl, whatsappLink } from '../../lib/content.js';
+
+export const getStaticPaths = langPaths;
+const { lang } = Astro.params;
+const tx = t(lang);
+const h = tx.home;
+const wa = whatsappLink(tx.common.whatsappMessage);
+const highlightIcons = ['book', 'receipt', 'search', 'chart'];
+---
+<Base lang={lang} page="" title={h.title} description={h.description}>
+  <section class="hero">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <span class="badge"><Icon name="shield" />{tx.common.licenceBadge}</span>
+      <h1>{h.heroTitle}</h1>
+      <p class="hero-text">{h.heroText}</p>
+      <p class="licence-line">{tx.common.licenceLine}</p>
+      <div class="btn-row">
+        <a class="btn btn-wa" href={wa}><Icon name="whatsapp" />{tx.common.whatsappCta}</a>
+        <a class="btn btn-outline" href={pageUrl(lang, 'services')}>{tx.common.seeServices}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <h2>{h.highlightsTitle}</h2>
+      <div class="grid grid-4" style="margin-top:20px">
+        {h.highlights.map((item, i) => (
+          <article class="card card-accent">
+            <div class="icon-dot"><Icon name={highlightIcons[i % highlightIcons.length]} /></div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+      <p style="margin-top:22px"><a href={pageUrl(lang, 'services')}>{tx.common.seeServices} →</a></p>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <h2>{h.whyTitle}</h2>
+      <div class="grid grid-3" style="margin-top:20px">
+        {h.why.map((item, i) => (
+          <article class="card">
+            <div class="icon-dot">{i + 1}</div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <h2>{h.ctaTitle}</h2>
+      <p>{h.ctaText}</p>
+      <div class="btn-row">
+        <a class="btn btn-wa" href={wa}><Icon name="whatsapp" />{tx.common.whatsappCta}</a>
+        <a class="btn btn-outline" href={pageUrl(lang, 'contact')}>{tx.nav.contact}</a>
+      </div>
+    </div>
+  </section>
+</Base>

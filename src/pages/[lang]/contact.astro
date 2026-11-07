@@ -1,0 +1,106 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ZhCheck from '../../components/ZhCheck.astro';
+import { t, langPaths, business, whatsappLink, telLink, isPlaceholder } from '../../lib/content.js';
+
+export const getStaticPaths = langPaths;
+const { lang } = Astro.params;
+const tx = t(lang);
+const c = tx.contact;
+const wa = whatsappLink(tx.common.whatsappMessage);
+const serviceOptions = [
+  ...tx.services.packages.map((p) => p.name),
+  ...tx.services.oneOff.map((o) => o.name),
+  c.formServiceOther,
+];
+// Settings passed to the small form script below
+const formConfig = {
+  whatsapp: business.whatsapp,
+  email: business.email,
+  subject: c.formEmailSubject,
+  required: c.formRequired,
+  labels: { name: c.formName, company: c.formCompany, phone: c.formPhone, service: c.formService },
+};
+---
+<Base lang={lang} page="contact" title={c.title} description={c.description}>
+  <section class="hero">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <h1>{c.heading}</h1>
+      <p class="hero-text">{c.intro}</p>
+      <div class="btn-row">
+        <a class="btn btn-wa" href={wa}><Icon name="whatsapp" />{tx.common.whatsappCta}</a>
+        <a class="btn btn-outline" href={telLink()}><Icon name="phone" />{tx.common.callUs}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <ZhCheck lang={lang} />
+    <div class="container contact-grid">
+      <div>
+        <ul class="contact-list">
+          <li><span class="k">{c.phoneLabel}</span><a class="v" href={telLink()}>{business.phoneDisplay}</a></li>
+          <li><span class="k">{c.emailLabel}</span><a class="v" href={`mailto:${business.email}`}>{business.email}</a></li>
+          <li><span class="k">{c.addressLabel}</span><span class="v">{c.address}</span><br />
+            {isPlaceholder(business.mapsLink)
+              ? <span>{business.mapsLink}</span>
+              : <a href={business.mapsLink} rel="noopener">{c.mapLink} →</a>}
+          </li>
+          <li><span class="k">{c.hoursLabel}</span><span class="v">{c.hours}</span></li>
+          <li><span class="k">{c.facebookLabel}</span>
+            {isPlaceholder(business.facebook)
+              ? <span class="v">{business.facebook}</span>
+              : <a class="v" href={business.facebook} rel="noopener">{business.facebook.replace(/^https?:\/\/(www\.)?/, '')}</a>}
+          </li>
+        </ul>
+        <p class="licence-line">{tx.common.licenceLine}</p>
+      </div>
+
+      <div class="card">
+        <h2 style="font-size:1.35rem">{c.formTitle}</h2>
+        <p style="color:var(--muted)">{c.formIntro}</p>
+        <noscript><p class="form-error">{c.noJs}</p></noscript>
+        <form id="enquiry" novalidate>
+          <div class="field"><label for="f-name">{c.formName}</label><input id="f-name" name="name" autocomplete="name" required /></div>
+          <div class="field"><label for="f-company">{c.formCompany}</label><input id="f-company" name="company" autocomplete="organization" /></div>
+          <div class="field"><label for="f-phone">{c.formPhone}</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" /></div>
+          <div class="field"><label for="f-service">{c.formService}</label>
+            <select id="f-service" name="service">{serviceOptions.map((o) => <option>{o}</option>)}</select>
+          </div>
+          <div class="field"><label for="f-message">{c.formMessage}</label><textarea id="f-message" name="message" required></textarea></div>
+          <p class="form-error" id="f-error" role="alert"></p>
+          <div class="btn-row">
+            <button class="btn btn-wa" type="submit" value="whatsapp"><Icon name="whatsapp" />{c.formSendWhatsapp}</button>
+            <button class="btn btn-outline" type="submit" value="email"><Icon name="mail" />{c.formSendEmail}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script is:inline define:vars={{ cfg: formConfig }}>
+  // Builds the message and opens WhatsApp or the email app. Nothing is sent to a server.
+  const form = document.getElementById('enquiry');
+  const err = document.getElementById('f-error');
+  form.addEventListener('input', () => { err.textContent = ''; });
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const get = (k) => String(d.get(k) || '').trim();
+    if (!get('name') || !get('message')) { err.textContent = cfg.required; return; }
+    // Label without "(optional)" for the message
+    const label = (k) => cfg.labels[k].replace(/\s*[（(][^)）]*[)）]\s*$/, '');
+    const lines = [`${label('name')}: ${get('name')}`];
+    if (get('company')) lines.push(`${label('company')}: ${get('company')}`);
+    if (get('phone')) lines.push(`${label('phone')}: ${get('phone')}`);
+    lines.push(`${label('service')}: ${get('service')}`, '', get('message'));
+    const text = lines.join('\n');
+    const via = e.submitter ? e.submitter.value : 'whatsapp';
+    window.location.href = via === 'email'
+      ? `mailto:${cfg.email}?subject=${encodeURIComponent(cfg.subject)}&body=${encodeURIComponent(text)}`
+      : `https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent(text)}`;
+  });
+</script>
