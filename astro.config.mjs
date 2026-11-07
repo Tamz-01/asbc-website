@@ -5,6 +5,8 @@ import { load } from 'js-yaml';
 
 // The website address comes from content/business.yml (siteUrl)
 const { siteUrl } = load(readFileSync(new URL('./content/business.yml', import.meta.url), 'utf8'));
+// e.g. https://tamz-01.github.io/asbc-website -> origin + "/asbc-website". A plain domain has no path.
+const { origin, pathname } = new URL(siteUrl);
 
 // During preview (npm run dev): when a file in /content changes, reload the page
 // so text and price edits show up straight away.
@@ -25,7 +27,8 @@ const reloadOnContentChange = {
 };
 
 export default defineConfig({
-  site: siteUrl,
+  site: origin,
+  base: pathname,
   trailingSlash: 'always',
   vite: { plugins: [reloadOnContentChange] },
   integrations: [

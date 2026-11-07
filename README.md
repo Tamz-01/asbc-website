@@ -31,7 +31,7 @@ Example for Facebook posts: `https://YOUR-DOMAIN/en/services/`
    ```
    npm run dev
    ```
-3. Open **http://localhost:4321** in your browser. Changes you save appear immediately.
+3. Open **http://localhost:4321/asbc-website/** in your browser. Changes you save appear immediately.
 4. Press `Ctrl + C` in the terminal to stop.
 
 The first time on a new computer, run `npm install` once before step 2.
@@ -94,18 +94,19 @@ For a Facebook video, the post must be **public** or it won't play on the websit
 
 ---
 
-## 4. Put changes online (after the site is deployed)
+## 4. Put changes online
 
-Once the site is connected to GitHub and Cloudflare Pages, every change you save to GitHub goes
-live automatically in about one minute:
+The test site is at **https://tamz-01.github.io/asbc-website/**, published by GitHub Pages.
+Anyone with this address can open it. Every change you save to GitHub goes live automatically
+in about one minute:
 
 1. Open **GitHub Desktop**. It lists the files you changed.
 2. Type a short note (e.g. "Update prices") and click **Commit to main**.
 3. Click **Push origin**.
 4. Wait about one minute, then refresh the website.
 
-If the website does not update, open the Cloudflare Pages dashboard → your project → **Deployments**
-to see the error message (usually a missing quote or wrong spacing in a .yml file).
+If the website does not update, open the **Actions** tab of the repository on GitHub to see the
+error message (usually a missing quote or wrong spacing in a .yml file).
 
 ---
 
@@ -117,6 +118,7 @@ to see the error message (usually a missing quote or wrong spacing in a .yml fil
 - [ ] Licence number and MOF notice scan added
 - [ ] Company name updated if the change to "Co., Ltd" is approved
 - [ ] `siteUrl` in `business.yml` changed to your real domain
+- [ ] `testSite` in `business.yml` changed to `false`, so Google can list the site
 
 ---
 
@@ -124,9 +126,7 @@ to see the error message (usually a missing quote or wrong spacing in a .yml fil
 
 - Built with [Astro](https://astro.build). Pages are in `src/pages/[lang]/`, the shared frame (header,
   footer, Google/Facebook tags) is `src/layouts/Base.astro`, colours are at the top of `src/styles/global.css`.
-- `npm run build` creates the finished website in `dist/`. Cloudflare Pages settings:
-  build command `npm run build`, output folder `dist`.
+- `npm run build` creates the finished website in `dist/`. Publishing is done by
+  `.github/workflows/deploy.yml`.
 - To regenerate the logo, browser icon and Facebook share image from `../company data/logo.png`
   (the private folder next to this one): `node scripts/make-images.mjs`
-- When setting up Cloudflare Pages, the repository root is this `website` folder, so no
-  "root directory" setting is needed.

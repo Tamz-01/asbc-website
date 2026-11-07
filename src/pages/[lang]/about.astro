@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import ZhCheck from '../../components/ZhCheck.astro';
-import { t, langPaths, business, formatDate, isPlaceholder } from '../../lib/content.js';
+import { t, langPaths, business, formatDate, isPlaceholder, asset } from '../../lib/content.js';
 
 export const getStaticPaths = langPaths;
 const { lang } = Astro.params;
@@ -50,7 +50,7 @@ const lic = business.licence;
           </dl>
         </div>
         {lic.scanImage
-          ? <a href={`/images/${lic.scanImage}`}><img src={`/images/${lic.scanImage}`} alt={a.licenceScanAlt} loading="lazy" style="border:1px solid var(--line);border-radius:8px" /></a>
+          ? <a href={asset(`/images/${lic.scanImage}`)}><img src={asset(`/images/${lic.scanImage}`)} alt={a.licenceScanAlt} loading="lazy" style="border:1px solid var(--line);border-radius:8px" /></a>
           : <div class="scan-placeholder">{a.licenceScanPlaceholder}</div>}
       </div>
     </div>

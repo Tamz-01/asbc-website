@@ -1,17 +1,18 @@
 ---
 // The bare address (e.g. www.asbc.la) sends visitors to the Lao home page.
 // Cloudflare also does this instantly via public/_redirects.
+import { pageUrl } from '../lib/content.js';
 ---
 <!doctype html>
 <html lang="lo">
   <head>
     <meta charset="utf-8" />
     <title>ASBC</title>
-    <meta http-equiv="refresh" content="0; url=/lo/" />
-    <link rel="canonical" href="/lo/" />
+    <meta http-equiv="refresh" content={`0; url=${pageUrl('lo')}`} />
+    <link rel="canonical" href={pageUrl('lo')} />
     <meta name="robots" content="noindex" />
   </head>
   <body>
-    <p><a href="/lo/">ASBC – ລາວ</a> · <a href="/en/">English</a> · <a href="/zh/">中文</a></p>
+    <p><a href={pageUrl('lo')}>ASBC – ລາວ</a> · <a href={pageUrl('en')}>English</a> · <a href={pageUrl('zh')}>中文</a></p>
   </body>
 </html>

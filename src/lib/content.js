@@ -23,7 +23,13 @@ const texts = Object.fromEntries(LANGS.map((l) => [l, read(`${l}.yml`)]));
 export const t = (lang) => texts[lang];
 
 export const PAGES = ['', 'services', 'about', 'insights', 'contact'];
-export const pageUrl = (lang, page = '') => `/${lang}/${page ? page + '/' : ''}`;
+
+// The part of siteUrl after the domain: "/asbc-website" on GitHub Pages, "" on a plain domain.
+const basePath = new URL(business.siteUrl).pathname.replace(/\/$/, '');
+export const siteOrigin = new URL(business.siteUrl).origin;
+export const pageUrl = (lang, page = '') => `${basePath}/${lang}/${page ? page + '/' : ''}`;
+// Address of a file in the public folder, e.g. asset('/images/logo.png')
+export const asset = (path) => basePath + path;
 
 export const langPaths = () => LANGS.map((lang) => ({ params: { lang } }));
 

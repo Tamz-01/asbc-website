@@ -6,7 +6,12 @@
 
 # Website address. Change this when you connect your own domain,
 # e.g. https://www.asbc.la  (no slash at the end)
-siteUrl: "https://asbc-website.pages.dev"
+# All links on the site follow this address automatically.
+siteUrl: "https://tamz-01.github.io/asbc-website"
+
+# true = test site: asks Google and other search engines not to list it.
+# Change to false when the site goes live.
+testSite: true
 
 # Company name — shown in the footer, header (on wide screens) and Google data.
 # PENDING CHANGE: when the change from "Sole Co., Ltd" to "Co., Ltd" is approved, edit these two lines:

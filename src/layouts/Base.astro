@@ -14,13 +14,13 @@ import Icon from '../components/Icon.astro';
 import ZhCheck from '../components/ZhCheck.astro';
 import Flag from '../components/Flag.astro';
 import {
-  business, t, LANGS, LOCALE, PAGES, pageUrl, isPlaceholder, whatsappLink, telLink,
+  business, t, LANGS, LOCALE, PAGES, pageUrl, asset, siteOrigin, isPlaceholder, whatsappLink, telLink,
 } from '../lib/content.js';
 
 const { lang, page = '', title, description } = Astro.props;
 const tx = t(lang);
 const site = business.siteUrl.replace(/\/$/, '');
-const canonical = site + pageUrl(lang, page);
+const canonical = siteOrigin + pageUrl(lang, page);
 const ogImage = site + '/images/og-image.png';
 const navKeys = { '': 'home', services: 'services', about: 'about', insights: 'insights', contact: 'contact' };
 const wa = whatsappLink(tx.common.whatsappMessage);
@@ -32,7 +32,7 @@ const jsonLd = {
   '@id': site + '/#business',
   name: business.nameEn,
   alternateName: [business.nameShort, business.nameLo],
-  url: site + pageUrl(lang),
+  url: siteOrigin + pageUrl(lang),
   logo: site + '/images/logo.png',
   image: ogImage,
   telephone: business.phoneDisplay,
@@ -58,12 +58,13 @@ if (!isPlaceholder(business.facebook)) jsonLd.sameAs = [business.facebook];
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {business.testSite && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
-    {LANGS.map((l) => <link rel="alternate" hreflang={LOCALE[l].hreflang} href={site + pageUrl(l, page)} />)}
-    <link rel="alternate" hreflang="x-default" href={site + pageUrl('lo', page)} />
+    {LANGS.map((l) => <link rel="alternate" hreflang={LOCALE[l].hreflang} href={siteOrigin + pageUrl(l, page)} />)}
+    <link rel="alternate" hreflang="x-default" href={siteOrigin + pageUrl('lo', page)} />
     <meta name="theme-color" content="#0e5132" />
-    <link rel="icon" href="/favicon.png" type="image/png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href={asset('/favicon.png')} type="image/png" />
+    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ASBC" />
@@ -86,7 +87,7 @@ if (!isPlaceholder(business.facebook)) jsonLd.sameAs = [business.facebook];
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href={pageUrl(lang)} aria-label={`ASBC – ${tx.nav.home}`}>
-          <img src="/images/logo.png" width="74" height="37" alt="ASBC" />
+          <img src={asset('/images/logo.png')} width="74" height="37" alt="ASBC" />
           <span class="brand-name">{lang === 'lo' ? business.nameLo : business.nameEn}</span>
         </a>
 
