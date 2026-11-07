@@ -13,7 +13,7 @@ nav:
   home: "首页"
   services: "服务与价格"
   about: "关于我们"
-  insights: "财务洞察"
+  library: "资料库"
   contact: "联系我们"
   menu: "菜单"
 
@@ -181,15 +181,13 @@ about:
     - "协会"
     - "贸易及投资"
 
-insights:
-  title: "CFO 董事会简报视频 | ASBC 财务洞察"
-  description: "我们像 CFO 向董事会汇报一样，解读上市公司的财务报表。简短易懂的视频。"
-  heading: "财务洞察：CFO 董事会简报"
-  intro: "在每个视频中，我们像 CFO 向董事会汇报一样解读一家上市公司的财务报表：发生了什么、意味着什么、需要关注什么。"
-  disclaimer: "仅供教育用途，不构成投资建议。"
-  empty: "我们的首批视频即将上线。关注我们的 Facebook，抢先观看。"
-  followFacebook: "关注我们的 Facebook"
-  watchOn: "观看平台"
+# Library page. The documents will be added later; until then the "empty" text is shown.
+library:
+  title: "资料库 | ASBC"
+  description: "老挝会计、税务及商业方面的参考文件与资料。"
+  heading: "资料库"
+  intro: "汇集老挝会计、税务及商业方面的实用文件与资料。"
+  empty: "即将上线。我们正在准备第一批资料。"
 
 contact:
   title: "联系 ASBC | 万象会计师事务所"

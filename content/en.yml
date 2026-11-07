@@ -11,7 +11,7 @@ nav:
   home: "Home"
   services: "Services & prices"
   about: "About us"
-  insights: "Insights"
+  library: "Library"
   contact: "Contact"
   menu: "Menu"
 
@@ -180,15 +180,13 @@ about:
     - "Associations"
     - "Trading and investment"
 
-insights:
-  title: "CFO Board Briefing videos | ASBC Insights"
-  description: "We present public companies' financial statements the way a CFO briefs the Board. Short videos in plain language."
-  heading: "Insights: CFO Board Briefing"
-  intro: "In each video we take a public company's financial statements and present them the way a CFO briefs the Board: what happened, what it means and what to watch."
-  disclaimer: "For education only, not investment advice."
-  empty: "Our first videos are coming soon. Follow us on Facebook to see them first."
-  followFacebook: "Follow us on Facebook"
-  watchOn: "Watch on"
+# Library page. The documents will be added later; until then the "empty" text is shown.
+library:
+  title: "Library | ASBC"
+  description: "Reference documents and information on accounting, tax and business in Lao PDR."
+  heading: "Library"
+  intro: "Useful documents and information on accounting, tax and business in Lao PDR, collected in one place."
+  empty: "Coming soon. We are preparing the first documents."
 
 contact:
   title: "Contact ASBC | Accountants in Vientiane"

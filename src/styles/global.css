@@ -171,10 +171,7 @@ html[lang='lo'] .label, html[lang='zh-Hans'] .label { text-transform: none; lett
 .chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
 .chips li { background: var(--white); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 0.95rem; }
 
-/* ---------- Insights ---------- */
-.disclaimer { display: inline-block; background: var(--gold-soft); color: var(--gold-text); font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-bottom: 26px; }
-.video-frame { width: 100%; border: 0; border-radius: 8px; background: #000; display: block; }
-.video-card .meta { color: var(--muted); font-size: 0.9rem; margin: 10px 0 4px; }
+/* ---------- Library ---------- */
 .empty { border: 2px dashed var(--line); border-radius: var(--radius); padding: 32px; text-align: center; color: var(--muted); }
 
 /* ---------- Contact ---------- */

@@ -7,7 +7,6 @@ import { load } from 'js-yaml';
 const read = (name) => load(readFileSync(join(process.cwd(), 'content', name), 'utf8'));
 
 export const business = read('business.yml');
-export const videos = (read('videos.yml')?.videos ?? []).filter((v) => v && v.url);
 
 export const LANGS = ['lo', 'en', 'zh'];
 export const DEFAULT_LANG = 'lo';
@@ -22,7 +21,7 @@ export const LOCALE = {
 const texts = Object.fromEntries(LANGS.map((l) => [l, read(`${l}.yml`)]));
 export const t = (lang) => texts[lang];
 
-export const PAGES = ['', 'services', 'about', 'insights', 'contact'];
+export const PAGES = ['', 'services', 'about', 'library', 'contact'];
 
 // The part of siteUrl after the domain: "/asbc-website" on GitHub Pages, "" on a plain domain.
 const basePath = new URL(business.siteUrl).pathname.replace(/\/$/, '');
@@ -40,26 +39,6 @@ export const whatsappLink = (text) =>
   `https://wa.me/${business.whatsapp}${text ? '?text=' + encodeURIComponent(text) : ''}`;
 
 export const telLink = () => `tel:+${business.whatsapp}`;
-
-// Turns a pasted YouTube or Facebook link into an embeddable player address
-export function videoEmbed(url) {
-  const u = String(url).trim();
-  const yt =
-    u.match(/youtu\.be\/([\w-]{6,})/) ||
-    u.match(/youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/)([\w-]{6,})/);
-  if (yt) {
-    return { platform: 'YouTube', src: `https://www.youtube-nocookie.com/embed/${yt[1]}`, ratio: '16 / 9' };
-  }
-  if (/facebook\.com|fb\.watch/.test(u)) {
-    const vertical = /\/reel\//.test(u);
-    return {
-      platform: 'Facebook',
-      src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(u)}&show_text=false`,
-      ratio: vertical ? '9 / 16' : '16 / 9',
-    };
-  }
-  return { platform: 'link', src: null, ratio: '16 / 9' };
-}
 
 export function formatDate(date, lang) {
   if (!date) return '';

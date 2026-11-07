@@ -1,0 +1,27 @@
+---
+// Library page. The documents list will be added later; until then it shows the "coming soon" text.
+import Base from '../../layouts/Base.astro';
+import ZhCheck from '../../components/ZhCheck.astro';
+import { t, langPaths } from '../../lib/content.js';
+
+export const getStaticPaths = langPaths;
+const { lang } = Astro.params;
+const lib = t(lang).library;
+---
+<Base lang={lang} page="library" title={lib.title} description={lib.description}>
+  <section class="hero">
+    <ZhCheck lang={lang} />
+    <div class="container">
+      <h1>{lib.heading}</h1>
+      <p class="hero-text">{lib.intro}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="empty">
+        <p>{lib.empty}</p>
+      </div>
+    </div>
+  </section>
+</Base>

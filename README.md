@@ -19,7 +19,7 @@ ASBC Website/
 | `/en/` | English |
 | `/zh/` | Chinese |
 
-Each language has the same five pages: home, `services/`, `about/`, `insights/`, `contact/`.
+Each language has the same five pages: home, `services/`, `about/`, `library/`, `contact/`.
 Example for Facebook posts: `https://YOUR-DOMAIN/en/services/`
 
 ---
@@ -48,7 +48,6 @@ All words are in these files. Open them with Notepad or VS Code:
 | `content/en.yml` | All English text and prices |
 | `content/zh.yml` | All Chinese text and prices |
 | `content/business.yml` | Company name, phone, WhatsApp, email, Facebook, map link, hours, Ministry of Finance notice and licence number (shared by all languages) |
-| `content/videos.yml` | Insights videos |
 
 **Rules for editing .yml files**
 - Only change the words **inside the quotes** `"like this"`.
@@ -70,31 +69,12 @@ It then appears automatically on the About page in all three languages.
 
 ---
 
-## 3. Add a CFO Board Briefing video
-
-1. Open `content/videos.yml`.
-2. Copy the example block at the top, paste it **under** the line `videos:`, and remove the `#` at the start of each line.
-3. Paste the Facebook or YouTube link after `url:`, fill in the date and the titles.
-4. Put the newest video at the top.
-
-```yaml
-videos:
-  - url: "https://www.youtube.com/watch?v=abc123XYZ"
-    date: "2026-11-01"
-    company: "EDL-Gen"
-    title:
-      lo: "ສະຫຼຸບບົດລາຍງານການເງິນ ປີ 2025"
-      en: "2025 financial statements explained"
-      zh: "2025年财务报表解读"
-```
-
-The video player appears automatically on the Insights page in all three languages, with the
-"For education only, not investment advice" line.
-For a Facebook video, the post must be **public** or it won't play on the website.
+**Library page.** Its heading, introduction and "coming soon" text are under `library:` in each
+language file. The list of documents will be added later.
 
 ---
 
-## 4. Put changes online
+## 3. Put changes online
 
 The test site is at **https://tamz-01.github.io/asbc-website/**, published by GitHub Pages.
 Anyone with this address can open it. Every change you save to GitHub goes live automatically
@@ -132,7 +112,7 @@ AI tools read `CLAUDE.md` in this folder for the rules they must follow.
 
 ---
 
-## 5. Before going live: checklist
+## 4. Before going live: checklist
 
 - [ ] All `[PRICE]`, `[HOURS]`, `[FACEBOOK PAGE URL]`, `[MAPS LINK]` filled in
 - [ ] `hoursMachine` in `business.yml` filled in (e.g. `Mo-Fr 08:00-17:00`) for Google

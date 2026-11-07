@@ -30,7 +30,6 @@ one minute after a change reaches the `main` branch.
 |---|---|
 | All page text and prices | `content/lo.yml`, `content/en.yml`, `content/zh.yml` |
 | Company name, phone, email, address, licence | `content/business.yml` |
-| Insights videos | `content/videos.yml` |
 | Page layouts | `src/pages/[lang]/*.astro` |
 | Header, footer, page frame | `src/layouts/Base.astro` |
 | Colours and styles | `src/styles/global.css` |
