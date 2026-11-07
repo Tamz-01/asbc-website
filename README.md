@@ -108,6 +108,20 @@ in about one minute:
 If the website does not update, open the **Actions** tab of the repository on GitHub to see the
 error message (usually a missing quote or wrong spacing in a .yml file).
 
+### Changes made by someone else (for example a friend using AI)
+
+Other people can't publish directly. Their changes arrive as a **pull request**, and you decide
+whether they go live. Your own changes from GitHub Desktop still publish directly.
+
+1. Open the repository on GitHub and click the **Pull requests** tab.
+2. Open the request and click **Files changed** to see exactly what changed (red = removed,
+   green = added).
+3. If it looks right, click **Review changes** → **Approve** → **Submit review**, then go back
+   to **Conversation** and click **Merge pull request**. The site updates in about one minute.
+4. If something is wrong, write a comment instead, or click **Close pull request** to reject it.
+
+AI tools read `CLAUDE.md` in this folder for the rules they must follow.
+
 ---
 
 ## 5. Before going live: checklist
